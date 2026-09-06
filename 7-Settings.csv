@@ -1,0 +1,12 @@
+Key,Value
+Business Name,GopalSites
+Payment Gateway,Razorpay
+Razorpay Key ID,YOUR_RAZORPAY_KEY_ID
+Razorpay Key Secret,YOUR_RAZORPAY_KEY_SECRET
+Instamojo API Key,YOUR_INSTAMOJO_API_KEY
+Instamojo Auth Token,YOUR_INSTAMOJO_AUTH_TOKEN
+Instamojo Mode,test
+Starting Fee Amount,500
+WhatsApp Number,910000000000
+Contact Email,hello@example.com
+Site Redirect URL,https://your-site.pages.dev

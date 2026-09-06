@@ -1,0 +1,3 @@
+ID,Design Name,Category,Description,Preview Image URL,Demo URL,Features,Price Starting From,Status,Featured,Sort Order
+R001,Modern Restaurant,Restaurant,"Elegant restaurant site with menu, reservations and map",https://example.com/images/r001.jpg,https://example.com/demo/r001,"Menu, Booking",15000,Active,Yes,1
+S001,Elegant Salon,Salon,"Service menu, gallery and easy booking flow",https://example.com/images/s001.jpg,https://example.com/demo/s001,"Gallery, Booking",15000,Active,No,2

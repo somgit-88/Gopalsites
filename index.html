@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>GopalSites — Websites Built to Fit Your Business</title>
+<meta name="description" content="Browse real website designs by business type, pick the one you like, and tell us about your business. We'll build it for you.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-0:#100e24;
+    --bg-1:#1c1940;
+    --bg-2:#241f4d;
+    --amber:#e8a94a;
+    --amber-soft:#f0c483;
+    --rose:#c97b92;
+    --ink:#f3efe6;
+    --ink-dim:#c3bfe0;
+    --ink-faint:#8d88ae;
+    --glass-fill: rgba(255,255,255,0.055);
+    --glass-fill-strong: rgba(255,255,255,0.09);
+    --glass-border: rgba(255,255,255,0.14);
+    --radius-lg: 28px;
+    --radius-md: 18px;
+    --radius-sm: 12px;
+    --shadow-deep: 0 30px 80px -20px rgba(0,0,0,0.55);
+    --ease: cubic-bezier(.22,.9,.32,1);
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html{scroll-behavior:smooth; -webkit-text-size-adjust:100%;}
+  body{
+    margin:0;
+    font-family:'Manrope',sans-serif;
+    color:var(--ink);
+    background:
+      radial-gradient(1100px 700px at 12% -10%, rgba(233,169,74,0.16), transparent 60%),
+      radial-gradient(900px 600px at 90% 8%, rgba(201,123,146,0.14), transparent 55%),
+      radial-gradient(1200px 900px at 50% 110%, rgba(90,70,180,0.25), transparent 60%),
+      linear-gradient(180deg, var(--bg-0), var(--bg-1) 45%, var(--bg-2));
+    background-attachment:fixed;
+    min-height:100vh;
+    line-height:1.5;
+  }
+  h1,h2,h3,h4{font-family:'Fraunces',serif; font-weight:500; margin:0; letter-spacing:-0.01em;}
+  p{margin:0;}
+  a{color:inherit;}
+  img{max-width:100%;display:block;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 28px;}
+  section{padding:110px 0;}
+  @media (max-width:780px){ section{padding:70px 0;} .wrap{padding:0 20px;} }
+
+  /* buttons */
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:14px 26px; border-radius:100px; border:1px solid transparent;
+    font-family:'Manrope',sans-serif; font-weight:700; font-size:15px; cursor:pointer;
+    transition:transform .35s var(--ease), box-shadow .35s var(--ease), background .35s var(--ease);
+    text-decoration:none;
+  }
+  .btn-primary{ background:linear-gradient(135deg, var(--amber-soft), var(--amber)); color:#241608; box-shadow:0 12px 30px -10px rgba(232,169,74,0.55);}
+  .btn-primary:hover{ transform:translateY(-2px); box-shadow:0 18px 40px -12px rgba(232,169,74,0.7);}
+  .btn-ghost{ background:var(--glass-fill); border-color:var(--glass-border); color:var(--ink); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);}
+  .btn-ghost:hover{ background:var(--glass-fill-strong); transform:translateY(-2px);}
+  .btn-small{padding:10px 18px; font-size:13.5px;}
+  .btn:disabled{opacity:.4; cursor:not-allowed; transform:none;}
+
+  /* glass panel base */
+  .glass{
+    background:var(--glass-fill);
+    border:1px solid var(--glass-border);
+    border-radius:var(--radius-lg);
+    backdrop-filter:blur(18px) saturate(140%);
+    -webkit-backdrop-filter:blur(18px) saturate(140%);
+    box-shadow:var(--shadow-deep), inset 0 1px 0 rgba(255,255,255,0.08);
+  }
+
+  /* nav */
+  header{
+    position:sticky; top:0; z-index:60;
+    backdrop-filter:blur(16px);
+    -webkit-backdrop-filter:blur(16px);
+    background:rgba(16,14,36,0.75);
+    border-bottom:1px solid rgba(255,255,255,0.08);
+    padding-top:env(safe-area-inset-top);
+  }
+  .nav{ display:flex; align-items:center; justify-content:space-between; padding:18px 28px; max-width:1180px; margin:0 auto; position:relative;}
+  .logo{ font-family:'Fraunces',serif; font-size:22px; display:flex; align-items:center; gap:10px;}
+  .logo-mark{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--amber),var(--rose)); flex-shrink:0;}
+  .nav-links{display:flex; gap:30px; align-items:center;}
+  .nav-links a{font-size:14.5px; font-weight:600; color:var(--ink-dim); text-decoration:none; transition:color .25s;}
+  .nav-links a:hover{color:var(--ink);}
+  .nav-cta{display:none;}
+  .nav-right{display:flex; align-items:center; gap:14px;}
+  .menu-toggle{
+    display:flex; flex-direction:column; justify-content:center; gap:5px;
+    width:40px; height:40px; border-radius:12px; border:1px solid var(--glass-border);
+    background:var(--glass-fill); cursor:pointer; padding:0; align-items:center;
+  }
+  .menu-toggle span{width:18px; height:2px; background:var(--ink); border-radius:2px; transition:transform .3s var(--ease), opacity .3s var(--ease);}
+  .menu-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  .menu-toggle.open span:nth-child(2){opacity:0;}
+  .menu-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+  @media (min-width:900px){ .menu-toggle{display:none;} }
+  @media (min-width:640px){.nav-cta{display:inline-flex;}}
+  @media (max-width:899px){
+    .nav-links{
+      display:flex; flex-direction:column; align-items:stretch; gap:2px;
+      position:absolute; top:calc(100% + 10px); left:20px; right:20px;
+      background:rgba(20,17,45,0.97); backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px);
+      border:1px solid var(--glass-border); border-radius:18px; padding:10px;
+      box-shadow:var(--shadow-deep);
+      opacity:0; visibility:hidden; transform:translateY(-8px);
+      transition:opacity .25s var(--ease), transform .25s var(--ease), visibility .25s;
+    }
+    .nav-links.open{ opacity:1; visibility:visible; transform:translateY(0);}
+    .nav-links a{ padding:13px 14px; border-radius:10px;}
+    .nav-links a:hover, .nav-links a:active{ background:var(--glass-fill-strong);}
+  }
+  @media (min-width:900px){.nav-links{display:flex !important; position:static; opacity:1; visibility:visible; transform:none; background:none; border:none; box-shadow:none; padding:0; flex-direction:row;}}
+
+  /* hero */
+  .hero{ padding:90px 0 60px; position:relative; overflow:hidden;}
+  .hero-grid{ display:grid; grid-template-columns:1.05fr 0.95fr; gap:50px; align-items:center;}
+  @media (max-width:940px){.hero-grid{grid-template-columns:1fr;} .hero-stack{order:-1; margin-bottom:20px;}}
+  .kicker{ color:var(--amber-soft); font-size:14.5px; font-weight:700; margin-bottom:18px;}
+  h1.headline{ font-size:clamp(38px,5.4vw,64px); line-height:1.04; margin-bottom:22px;}
+  h1.headline em{font-style:italic; color:var(--amber-soft);}
+  .sub{ font-size:18px; color:var(--ink-dim); max-width:480px; margin-bottom:34px;}
+  .hero-actions{display:flex; gap:14px; flex-wrap:wrap; margin-bottom:38px;}
+  .trust-strip{display:flex; gap:26px; flex-wrap:wrap; font-size:13.5px; color:var(--ink-faint);}
+  .trust-strip span{display:flex; align-items:center; gap:7px;}
+  .dot{width:6px;height:6px;border-radius:50%;background:var(--amber);}
+
+  .hero-stack{position:relative; height:440px;}
+  .float-card{
+    position:absolute; width:76%; border-radius:20px; overflow:hidden;
+    box-shadow:0 40px 70px -20px rgba(0,0,0,0.6); border:1px solid rgba(255,255,255,0.16);
+  }
+  .float-card img{ width:100%; height:190px; object-fit:cover; display:block;}
+  .float-card .fc-label{ background:rgba(20,17,45,0.85); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); padding:10px 14px; font-size:12.5px; font-weight:700; color:var(--ink-dim); display:flex; justify-content:space-between;}
+  .fc1{ top:0; left:0; transform:rotate(-6deg); z-index:1; animation:drift1 9s ease-in-out infinite;}
+  .fc2{ top:70px; left:22%; transform:rotate(4deg); z-index:2; animation:drift2 11s ease-in-out infinite;}
+  .fc3{ top:210px; left:6%; transform:rotate(-2deg); z-index:3; animation:drift3 10s ease-in-out infinite;}
+  @keyframes drift1{ 0%,100%{transform:rotate(-6deg) translateY(0);} 50%{transform:rotate(-4deg) translateY(-10px);} }
+  @keyframes drift2{ 0%,100%{transform:rotate(4deg) translateY(0);} 50%{transform:rotate(6deg) translateY(-14px);} }
+  @keyframes drift3{ 0%,100%{transform:rotate(-2deg) translateY(0);} 50%{transform:rotate(-1deg) translateY(-8px);} }
+  @media (prefers-reduced-motion: reduce){ .float-card{animation:none !important;} }
+  @media (max-width:940px){ .hero-stack{height:300px;} .float-card{width:60%;} }
+
+  /* section headers */
+  .section-head{ max-width:600px; margin-bottom:48px;}
+  .section-head h2{ font-size:clamp(28px,3.6vw,40px); margin-bottom:14px;}
+  .section-head p{ color:var(--ink-dim); font-size:16.5px;}
+
+  /* categories */
+  .cat-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:18px;}
+  .cat-card{ padding:24px; cursor:pointer; transition:transform .35s var(--ease), background .35s var(--ease); }
+  .cat-card:hover{ transform:translateY(-5px); background:var(--glass-fill-strong);}
+  .cat-icon{ font-size:26px; margin-bottom:14px; display:inline-block;}
+  .cat-card h4{ font-size:17px; margin-bottom:6px; font-family:'Manrope',sans-serif; font-weight:800;}
+  .cat-card p{ font-size:13.5px; color:var(--ink-faint); margin-bottom:14px; line-height:1.45;}
+  .cat-count{ font-size:12.5px; color:var(--amber-soft); font-weight:700;}
+
+  /* gallery controls */
+  .gallery-controls{ display:flex; flex-wrap:wrap; gap:12px; align-items:center; justify-content:space-between; margin-bottom:34px;}
+  .chip-row{ display:flex; gap:9px; flex-wrap:wrap;}
+  .chip{ padding:9px 17px; border-radius:100px; font-size:13.5px; font-weight:700; cursor:pointer; border:1px solid var(--glass-border); background:var(--glass-fill); color:var(--ink-dim); transition:all .25s;}
+  .chip.active,.chip:hover{ background:var(--amber); color:#241608; border-color:var(--amber);}
+  .search-box{ position:relative;}
+  .search-box input{
+    padding:11px 18px 11px 40px; border-radius:100px; border:1px solid var(--glass-border);
+    background:var(--glass-fill); color:var(--ink); font-family:'Manrope'; font-size:16px; width:230px;
+  }
+  .search-box input::placeholder{color:var(--ink-faint);}
+  .search-box::before{content:"⚲"; position:absolute; left:15px; top:50%; transform:translateY(-50%); color:var(--ink-faint);}
+
+  /* design gallery */
+  .gallery-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:24px;}
+  .design-card{ overflow:hidden; display:flex; flex-direction:column;}
+  .design-thumb{ position:relative; overflow:hidden; height:190px;}
+  .design-thumb img{ width:100%; height:100%; object-fit:cover; transition:transform .6s var(--ease);}
+  .design-card:hover .design-thumb img{ transform:scale(1.06);}
+  .design-cat-tag{ position:absolute; top:12px; left:12px; background:rgba(16,14,36,0.75); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); padding:6px 13px; border-radius:100px; font-size:11.5px; font-weight:700; color:var(--amber-soft);}
+  .design-body{ padding:20px 22px 22px; display:flex; flex-direction:column; gap:10px; flex:1;}
+  .design-body h4{ font-size:18px; font-family:'Manrope'; font-weight:800;}
+  .design-body p{ font-size:13.5px; color:var(--ink-faint); line-height:1.5; flex:1;}
+  .design-actions{ display:flex; gap:10px; margin-top:6px;}
+
+  /* modal */
+  .modal-overlay{ position:fixed; inset:0; background:rgba(10,9,22,0.72); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); z-index:200; display:none; align-items:center; justify-content:center; padding:24px; padding-top:calc(24px + env(safe-area-inset-top)); padding-bottom:calc(24px + env(safe-area-inset-bottom));}
+  .modal-overlay.open{ display:flex;}
+  .modal-box{ max-width:680px; width:100%; max-height:88vh; overflow-y:auto; padding:0;}
+  .modal-img{ width:100%; height:280px; object-fit:cover; border-radius:28px 28px 0 0;}
+  .modal-content{ padding:30px 32px 32px;}
+  .modal-content h3{ font-size:26px; margin-bottom:8px;}
+  .modal-cat{ color:var(--amber-soft); font-size:13px; font-weight:700; margin-bottom:16px; display:block;}
+  .modal-content p{ color:var(--ink-dim); font-size:15px; line-height:1.6; margin-bottom:22px;}
+  .modal-close{ position:absolute; top:16px; right:16px; width:44px; height:44px; border-radius:50%; background:rgba(16,14,36,0.7); border:1px solid var(--glass-border); color:var(--ink); font-size:16px; cursor:pointer; display:flex; align-items:center; justify-content:center;}
+  .modal-actions{ display:flex; gap:12px;}
+
+  /* pricing */
+  .price-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:22px;}
+  .price-card{ padding:34px 28px; display:flex; flex-direction:column; gap:16px;}
+  .price-card.featured{ border-color:rgba(232,169,74,0.5); background:linear-gradient(160deg, rgba(232,169,74,0.14), var(--glass-fill));}
+  .price-tag{ font-size:12.5px; font-weight:700; color:var(--amber-soft);}
+  .price-card h3{ font-size:24px;}
+  .price-card .price-note{ color:var(--ink-faint); font-size:14px;}
+  .price-feats{ list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:10px; font-size:14px; color:var(--ink-dim);}
+  .price-feats li::before{ content:"✓ "; color:var(--amber-soft); font-weight:700;}
+
+  /* trust */
+  .trust-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px;}
+  .trust-item{ padding:24px; display:flex; gap:14px; align-items:flex-start;}
+  .trust-item .ti-mark{ font-size:20px; flex-shrink:0;}
+  .trust-item h4{ font-size:15.5px; font-weight:800; font-family:'Manrope'; margin-bottom:5px;}
+  .trust-item p{ font-size:13.5px; color:var(--ink-faint); line-height:1.5;}
+
+  /* enquiry form */
+  .form-wrap{ max-width:640px; margin:0 auto; padding:0;}
+  .form-head{ padding:34px 36px 0;}
+  .progress-row{ display:flex; gap:8px; padding:0 36px; margin:26px 0 4px;}
+  .progress-seg{ flex:1; height:4px; border-radius:4px; background:rgba(255,255,255,0.12); overflow:hidden;}
+  .progress-seg.done{ background:var(--amber);}
+  .step-label{ padding:14px 36px 0; font-size:13px; color:var(--ink-faint); font-weight:700;}
+  .form-body{ padding:26px 36px 36px;}
+  .step{ display:none; flex-direction:column; gap:16px;}
+  .step.active{ display:flex;}
+  .field{ display:flex; flex-direction:column; gap:7px;}
+  .field label{ font-size:13.5px; font-weight:700; color:var(--ink-dim);}
+  .field input, .field select, .field textarea{
+    padding:13px 16px; border-radius:12px; border:1px solid var(--glass-border);
+    background:rgba(255,255,255,0.04); color:var(--ink); font-family:'Manrope'; font-size:16px; outline:none;
+    transition:border-color .25s;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus{ border-color:var(--amber);}
+  .field textarea{ resize:vertical; min-height:90px;}
+  .field-row{ display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  @media (max-width:520px){ .field-row{grid-template-columns:1fr;} }
+  .toggle-row{ display:flex; gap:10px; flex-wrap:wrap;}
+  .toggle-pill{ padding:10px 16px; border-radius:100px; border:1px solid var(--glass-border); background:rgba(255,255,255,0.04); font-size:13.5px; font-weight:700; cursor:pointer; color:var(--ink-dim);}
+  .toggle-pill.active{ background:var(--amber); color:#241608; border-color:var(--amber);}
+  .selected-design-box{ display:flex; align-items:center; gap:14px; padding:14px; border-radius:14px; background:rgba(232,169,74,0.1); border:1px solid rgba(232,169,74,0.3);}
+  .selected-design-box img{ width:60px; height:44px; object-fit:cover; border-radius:8px;}
+  .selected-design-box .sd-info{ flex:1;}
+  .selected-design-box .sd-info strong{ display:block; font-size:14.5px;}
+  .selected-design-box .sd-info span{ font-size:12.5px; color:var(--ink-faint);}
+  .form-nav{ display:flex; justify-content:space-between; margin-top:24px;}
+  .success-box{ text-align:center; padding:20px 0;}
+  .success-box .sb-icon{ font-size:42px; margin-bottom:16px;}
+  .success-box h3{ font-size:24px; margin-bottom:10px;}
+  .success-box p{ color:var(--ink-dim); font-size:15px;}
+
+  footer{ padding:60px 0 40px; border-top:1px solid rgba(255,255,255,0.08); margin-top:40px;}
+  .footer-grid{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:30px; margin-bottom:40px;}
+  .footer-cols{ display:flex; gap:60px; flex-wrap:wrap;}
+  .footer-col h5{ font-size:13.5px; font-weight:800; margin-bottom:14px; color:var(--ink);}
+  .footer-col a{ display:block; font-size:13.5px; color:var(--ink-faint); text-decoration:none; margin-bottom:10px;}
+  .footer-col a:hover{color:var(--ink);}
+  .footer-bottom{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; font-size:13px; color:var(--ink-faint); padding-top:24px; border-top:1px solid rgba(255,255,255,0.06);}
+
+  ::selection{background:rgba(232,169,74,0.4);}
+  :focus-visible{ outline:2px solid var(--amber-soft); outline-offset:2px;}
+
+  /* Fallback for browsers with no backdrop-filter support (some older
+     Android WebViews) — solid-ish backgrounds keep text readable. */
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))){
+    .glass, header, .nav-links, .modal-overlay, .float-card .fc-label, .design-cat-tag { background:#1c1940 !important; }
+  }
+
+  footer{ padding-bottom:calc(40px + env(safe-area-inset-bottom)); }
+  body{ overflow-x:hidden; }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="nav">
+    <div class="logo"><span class="logo-mark"></span>GopalSites</div>
+    <div class="nav-links" id="navLinks">
+      <a href="#categories">Browse by business</a>
+      <a href="#gallery">Designs</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#enquiry">Start a project</a>
+      <a href="#refer">Refer & earn</a>
+      <a href="#pay">Make a payment</a>
+    </div>
+    <div class="nav-right">
+      <a href="#gallery" class="btn btn-primary btn-small nav-cta">Browse designs</a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<div class="glass" id="paymentReturnBanner" style="display:none; margin:18px 28px 0; padding:16px 22px; max-width:1124px; margin-left:auto; margin-right:auto;"></div>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="kicker">A showroom, not a template shelf</div>
+      <h1 class="headline">Pick the website<br>your business <em>already deserves.</em></h1>
+      <p class="sub">Walk through real designs built for restaurants, clinics, law firms, salons and more. Point at the one that fits, tell us about your business, and we'll build it around you.</p>
+      <div class="hero-actions">
+        <a href="#categories" class="btn btn-primary">Browse designs by business</a>
+        <a href="#enquiry" class="btn btn-ghost">Start your project</a>
+      </div>
+      <div class="trust-strip">
+        <span><span class="dot"></span>Built for mobile first</span>
+        <span><span class="dot"></span>Delivered in days, not months</span>
+        <span><span class="dot"></span>You choose the look before we start</span>
+      </div>
+    </div>
+    <div class="hero-stack">
+      <div class="glass float-card fc1">
+        <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=500&q=70" alt="Restaurant website preview">
+        <div class="fc-label"><span>Modern Restaurant</span><span>★ 4.9</span></div>
+      </div>
+      <div class="glass float-card fc2">
+        <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=500&q=70" alt="Clinic website preview">
+        <div class="fc-label"><span>Clarity Clinic</span><span>★ 4.8</span></div>
+      </div>
+      <div class="glass float-card fc3">
+        <img src="https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?w=500&q=70" alt="Salon website preview">
+        <div class="fc-label"><span>Elegant Salon</span><span>★ 5.0</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="categories">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>What kind of business are you?</h2>
+      <p>Every category below opens onto real designs built for that trade — pick yours to start narrowing things down.</p>
+    </div>
+    <div class="cat-grid" id="catGrid"></div>
+  </div>
+</section>
+
+<section id="gallery">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Choose a design you like</h2>
+      <p>Preview any design full-screen, or choose it directly to attach it to your enquiry.</p>
+    </div>
+    <div class="gallery-controls">
+      <div class="chip-row" id="chipRow"></div>
+      <div class="search-box"><input type="text" id="searchInput" placeholder="Search designs..."></div>
+    </div>
+    <div class="gallery-grid" id="galleryGrid"></div>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Simple, upfront packages</h2>
+      <p>Every project starts with a design you've already seen — pricing below is a starting point, final quotes depend on your requirements.</p>
+    </div>
+    <div class="price-grid" id="priceGrid"></div>
+  </div>
+</section>
+
+<section id="trust">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Why businesses work with us</h2>
+    </div>
+    <div class="trust-grid" id="trustGrid"></div>
+  </div>
+</section>
+
+<section id="enquiry">
+  <div class="wrap">
+    <div class="section-head" style="margin:0 auto 40px; text-align:center; max-width:560px;">
+      <h2>Let's build your website</h2>
+      <p>Four short steps. Tell us about your business and the design you'd like — we'll take it from there.</p>
+    </div>
+    <div class="glass form-wrap">
+      <div id="formStepsUI">
+        <div class="progress-row" id="progressRow"></div>
+        <div class="step-label" id="stepLabel"></div>
+        <div class="form-body">
+          <form id="enquiryForm">
+            <div class="step active" data-step="1">
+              <div class="field"><label>Your name</label><input type="text" name="name" required></div>
+              <div class="field"><label>Business name</label><input type="text" name="businessName" required></div>
+              <div class="field-row">
+                <div class="field"><label>Email</label><input type="email" name="email" required></div>
+                <div class="field"><label>Phone / WhatsApp</label><input type="tel" name="phone" required></div>
+              </div>
+            </div>
+            <div class="step" data-step="2">
+              <div class="field"><label>Business category</label>
+                <select name="category" id="categorySelect" required></select>
+              </div>
+              <div class="field"><label>Location</label><input type="text" name="location" placeholder="City, state"></div>
+              <div class="field"><label>What does your business do?</label><textarea name="businessDesc" placeholder="A short description of your business"></textarea></div>
+              <div class="field"><label>Do you already have a website?</label>
+                <div class="toggle-row" data-toggle="hasWebsite">
+                  <div class="toggle-pill" data-value="Yes">Yes</div>
+                  <div class="toggle-pill active" data-value="No">No</div>
+                </div>
+              </div>
+              <div class="field"><label>Existing website URL (optional)</label><input type="text" name="existingUrl"></div>
+            </div>
+            <div class="step" data-step="3">
+              <div class="field"><label>Selected design</label>
+                <div class="selected-design-box" id="selectedDesignBox">
+                  <div class="sd-info"><strong id="sdName">No design chosen yet</strong><span id="sdCat">Browse the gallery and choose one, or skip this step</span></div>
+                  <button type="button" class="btn btn-ghost btn-small" onclick="document.getElementById('gallery').scrollIntoView({behavior:'smooth'})">Browse</button>
+                </div>
+              </div>
+              <div class="field"><label>Number of pages needed</label>
+                <select name="pages">
+                  <option>Not sure yet</option>
+                  <option>1–5 pages</option>
+                  <option>6–10 pages</option>
+                  <option>10+ pages</option>
+                </select>
+              </div>
+              <div class="field"><label>Features you need</label>
+                <div class="toggle-row" id="featureToggles">
+                  <div class="toggle-pill" data-value="E-commerce">E-commerce</div>
+                  <div class="toggle-pill" data-value="Online booking">Online booking</div>
+                  <div class="toggle-pill" data-value="WhatsApp integration">WhatsApp integration</div>
+                  <div class="toggle-pill" data-value="Payment gateway">Payment gateway</div>
+                </div>
+              </div>
+            </div>
+            <div class="step" data-step="4">
+              <div class="field"><label>Budget</label>
+                <select name="budget" required>
+                  <option value="">Select a range</option>
+                  <option>Under ₹10,000</option>
+                  <option>₹10,000–₹25,000</option>
+                  <option>₹25,000–₹50,000</option>
+                  <option>₹50,000–₹1,00,000</option>
+                  <option>₹1,00,000+</option>
+                </select>
+              </div>
+              <div class="field"><label>Anything else we should know?</label><textarea name="message" placeholder="Additional requirements or questions"></textarea></div>
+            </div>
+          </form>
+          <div class="form-nav">
+            <button type="button" class="btn btn-ghost btn-small" id="prevBtn" onclick="changeStep(-1)" style="visibility:hidden;">Back</button>
+            <button type="button" class="btn btn-primary" id="nextBtn" onclick="changeStep(1)">Continue</button>
+          </div>
+        </div>
+      </div>
+      <div class="success-box" id="paymentStartBox" style="display:none; padding:34px 36px;">
+        <div class="sb-icon">✓</div>
+        <h3>Your enquiry is in</h3>
+        <p style="margin-bottom:22px;">We've received your details<span id="paymentDesignNote"></span>. To start design work, there's a starting fee of <strong id="startingFeeAmountLabel">₹500</strong> — it confirms the project and gets you into our queue.</p>
+        <button class="btn btn-primary" id="startPaymentBtn" onclick="startProjectPayment()">Pay <span id="startingFeeAmountLabel2">₹500</span> & start my project</button>
+        <p style="font-size:12.5px; color:var(--ink-faint); margin-top:14px;">You'll be taken to a secure payment page. We'll confirm on WhatsApp once it's received.</p>
+      </div>
+      <div class="success-box" id="successBox" style="display:none;">
+        <div class="sb-icon">✓</div>
+        <h3 id="successTitle">Payment received</h3>
+        <p id="successMsg">Thanks — your project has officially started. We'll reach out within 24 hours to begin work.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="refer">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Refer a business, earn <span id="referralRewardLabel">₹500</span></h2>
+      <p>Know a business that needs a website? Tell us who they are — once their project goes ahead, we send you <span id="referralRewardLabel2">₹500</span>.</p>
+    </div>
+    <div class="glass" style="max-width:520px; padding:32px 30px; display:flex; flex-direction:column; gap:16px;">
+      <div class="field-row">
+        <div class="field"><label>Your name</label><input type="text" id="refName"></div>
+        <div class="field"><label>Your phone / WhatsApp</label><input type="tel" id="refPhone"></div>
+      </div>
+      <div class="field"><label>Your email (optional)</label><input type="email" id="refEmail"></div>
+      <div class="field"><label>Business you're referring</label><input type="text" id="refBusinessName" placeholder="e.g. Sunrise Bakery"></div>
+      <div class="field-row">
+        <div class="field"><label>Contact person there</label><input type="text" id="refContactPerson"></div>
+        <div class="field"><label>Their phone (if you have it)</label><input type="tel" id="refContactPhone"></div>
+      </div>
+      <button class="btn btn-primary" id="referBtn" onclick="submitReferral()">Submit referral</button>
+      <p id="referStatusMsg" style="font-size:13px; color:var(--ink-faint);"></p>
+    </div>
+  </div>
+</section>
+
+<section id="pay">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Make a payment</h2>
+      <p>Already working with us? Pay your starting fee, a milestone, or any amount you've agreed on — directly here.</p>
+    </div>
+    <div class="glass" style="max-width:480px; padding:32px 30px; display:flex; flex-direction:column; gap:16px;">
+      <div class="field"><label>Your name</label><input type="text" id="payName"></div>
+      <div class="field-row">
+        <div class="field"><label>Email</label><input type="email" id="payEmail"></div>
+        <div class="field"><label>Phone</label><input type="tel" id="payPhone"></div>
+      </div>
+      <div class="field"><label>Amount (₹)</label><input type="number" id="payAmount" min="1" placeholder="Enter any amount"></div>
+      <button class="btn btn-primary" id="payNowBtn" onclick="startCustomPayment()">Pay now</button>
+      <p id="payStatusMsg" style="font-size:13px; color:var(--ink-faint);"></p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="logo"><span class="logo-mark"></span>GopalSites</div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h5>Explore</h5>
+          <a href="#categories">Browse by business</a>
+          <a href="#gallery">All designs</a>
+          <a href="#pricing">Pricing</a>
+        </div>
+        <div class="footer-col">
+          <h5>Get in touch</h5>
+          <a href="#enquiry">Start a project</a>
+          <a href="mailto:hello@example.com">hello@example.com</a>
+          <a href="https://wa.me/910000000000">WhatsApp us</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 GopalSites. All rights reserved.</span>
+      <span>Built and hosted on Cloudflare Pages</span>
+    </div>
+  </div>
+</footer>
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="glass modal-box" style="position:relative;">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <img class="modal-img" id="modalImg" src="" alt="">
+    <div class="modal-content">
+      <span class="modal-cat" id="modalCat"></span>
+      <h3 id="modalName"></h3>
+      <p id="modalDesc"></p>
+      <div class="modal-actions">
+        <button class="btn btn-primary" onclick="chooseFromModal()">I want this design</button>
+        <a class="btn btn-ghost" id="modalDemoLink" href="#" target="_blank" rel="noopener">View live demo</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* =========================================================================
+   CONFIGURATION
+   Replace APPS_SCRIPT_URL with your deployed Google Apps Script web app URL.
+   Until then, the site runs on the SAMPLE_DESIGNS data below (demo mode).
+   ========================================================================= */
+const CONFIG = {
+  APPS_SCRIPT_URL: "https://script.google.com/macros/s/AKfycbza9S2mdDtswcwYKVjuwgmRpjKhmJc-uvKbiGZeT0aESLfru3H95TCFKwmWjjCrO_PpFw/exec",
+  businessName: "GopalSites",
+  startingFee: 500,
+  referralReward: 500,
+  paymentGateway: "Razorpay",
+};
+
+/* Fallback categories — used only until CONFIG.APPS_SCRIPT_URL is connected
+   to the "Categories" tab of your Google Sheet. Add/remove categories there;
+   no code changes needed once connected. `key` matches the design `category`. */
+const SAMPLE_CATEGORIES = [
+  {key:"Restaurant", icon:"🍽️", desc:"Menus, reservations, location."},
+  {key:"Cafe", icon:"☕", desc:"Menus and a warm first impression."},
+  {key:"Hotel", icon:"🛎️", desc:"Rooms, booking, gallery."},
+  {key:"Salon", icon:"💇", desc:"Services, gallery, booking."},
+  {key:"Spa", icon:"🌿", desc:"Treatments and calm, visual design."},
+  {key:"Doctor", icon:"🩺", desc:"Appointments, services, trust."},
+  {key:"Clinic", icon:"⚕️", desc:"Departments, doctors, booking."},
+  {key:"Dentist", icon:"🦷", desc:"Services and appointment requests."},
+  {key:"Lawyer", icon:"⚖️", desc:"Practice areas and consultations."},
+  {key:"Real Estate", icon:"🏠", desc:"Listings, search, enquiries."},
+  {key:"Construction", icon:"🏗️", desc:"Projects, services, quotes."},
+  {key:"Photographer", icon:"📷", desc:"Portfolio-first, gallery-heavy."},
+  {key:"Wedding Planner", icon:"💍", desc:"Packages, gallery, enquiry form."},
+  {key:"Gym", icon:"🏋️", desc:"Plans, schedules, sign-up."},
+  {key:"Fitness Trainer", icon:"🤸", desc:"Programs and booking."},
+  {key:"Freelancer", icon:"💼", desc:"Portfolio and contact form."},
+  {key:"Consultant", icon:"📊", desc:"Services and case studies."},
+  {key:"Digital Agency", icon:"🖥️", desc:"Work samples and enquiry."},
+  {key:"E-commerce", icon:"🛒", desc:"Products, cart, checkout."},
+  {key:"Education", icon:"🎓", desc:"Courses and enrolment."},
+  {key:"Travel Agency", icon:"✈️", desc:"Packages and enquiry forms."},
+  {key:"Interior Designer", icon:"🛋️", desc:"Portfolio and consultations."},
+];
+
+/* Fallback facilities — used until CONFIG.APPS_SCRIPT_URL is connected to
+   the "Facilities" tab. Powers the "Why businesses choose us" section. */
+const SAMPLE_FACILITIES = [
+  {icon:"✎", name:"Designed around your business", desc:"Not a generic template — we adapt the design you choose to your content and brand."},
+  {icon:"⚡", name:"Fast to launch", desc:"Because you start from a proven design, we skip the slow back-and-forth of designing from zero."},
+  {icon:"◔", name:"Mobile-first", desc:"Every design is built to work on a phone first — where most of your customers will find you."},
+  {icon:"☍", name:"Findable on Google", desc:"Clean structure and fast loading pages, built with search visibility in mind from day one."},
+  {icon:"✆", name:"WhatsApp-ready", desc:"Customers can reach you directly from the site — no extra apps or logins required."},
+  {icon:"◐", name:"Support after launch", desc:"We stay reachable after your site goes live, for fixes, edits and questions."},
+];
+
+/* Fallback pricing — used until CONFIG.APPS_SCRIPT_URL is connected to the
+   "Pricing" tab. Change rates and features there without touching code. */
+const SAMPLE_PRICING = [
+  {name:"Starter", note:"From ₹10,000", features:["Up to 5 pages","Mobile responsive design","WhatsApp contact button","Basic SEO setup"], featured:false},
+  {name:"Professional", note:"From ₹25,000", features:["Up to 12 pages","Online booking or enquiry forms","Custom design refinements","SEO for every page","3 months of support"], featured:true},
+  {name:"E-commerce", note:"From ₹50,000", features:["Full product catalogue","Payment gateway integration","Order and inventory basics","6 months of support"], featured:false},
+];
+
+/* Sample gallery data — used only until CONFIG.APPS_SCRIPT_URL is connected
+   to a live Google Sheet. Shape matches the "Website Designs" sheet columns. */
+const SAMPLE_DESIGNS = [
+  {id:"R001", name:"Modern Restaurant", category:"Restaurant", description:"Elegant restaurant site with menu, reservations and map.", image:"https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=700&q=70", demoUrl:"#", status:"Active"},
+  {id:"C001", name:"Corner Cafe", category:"Cafe", description:"Warm, photo-led layout for a neighbourhood cafe.", image:"https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=700&q=70", demoUrl:"#", status:"Active"},
+  {id:"S001", name:"Elegant Salon", category:"Salon", description:"Service menu, gallery and easy booking flow.", image:"https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?w=700&q=70", demoUrl:"#", status:"Active"},
+  {id:"D001", name:"Clarity Clinic", category:"Doctor", description:"Doctor profiles, departments and appointment requests.", image:"https://images.unsplash.com/photo-1560066984-138dadb4c035?w=700&q=70", demoUrl:"#", status:"Active"},
+  {id:"L001", name:"Sterling & Co. Law", category:"Lawyer", description:"Practice areas laid out for quick, confident scanning.", image:"https://images.unsplash.com/photo-1521791136064-7986c2920216?w=700&q=70", demoUrl:"#", status:"Active"},
+  {id:"RE001", name:"Horizon Properties", category:"Real Estate", description:"Listings grid with search and enquiry per property.", image:"https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=700&q=70", demoUrl:"#", status:"Active"},
+  {id:"P001", name:"Lens & Light", category:"Photographer", description:"Full-bleed gallery-first portfolio site.", image:"https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=700&q=70", demoUrl:"#", status:"Active"},
+  {id:"G001", name:"Iron Gym", category:"Gym", description:"Membership plans, class schedule and sign-up.", image:"https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=700&q=70", demoUrl:"#", status:"Active"},
+  {id:"E001", name:"Northbound Store", category:"E-commerce", description:"Product-grid storefront with cart and checkout.", image:"https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=700&q=70", demoUrl:"#", status:"Active"},
+  {id:"H001", name:"The Marlowe Hotel", category:"Hotel", description:"Room gallery, booking widget and amenities.", image:"https://images.unsplash.com/photo-1566073771259-6a8506099945?w=700&q=70", demoUrl:"#", status:"Active"},
+  {id:"W001", name:"Evermore Weddings", category:"Wedding Planner", description:"Packages, testimonials and enquiry form.", image:"https://images.unsplash.com/photo-1519741497674-611481863552?w=700&q=70", demoUrl:"#", status:"Active"},
+  {id:"CO001", name:"Meridian Consulting", category:"Consultant", description:"Case studies and a clear services breakdown.", image:"https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=700&q=70", demoUrl:"#", status:"Active"},
+];
+
+/* ===================== state ===================== */
+let designs = [];
+let categories = [];
+let facilities = [];
+let pricing = [];
+let activeFilter = "All";
+let searchTerm = "";
+let selectedDesign = null;
+let currentStep = 1;
+let lastLeadPayload = null; // {leadId, name, email, phone} — filled in after enquiry submit
+const TOTAL_STEPS = 4;
+const stepLabels = ["Your details","Your business","Your website","Budget & requirements"];
+
+/* ===================== data loading ===================== */
+async function loadDesigns(){
+  if (CONFIG.APPS_SCRIPT_URL) {
+    try {
+      const res = await fetch(CONFIG.APPS_SCRIPT_URL + "?action=config");
+      const data = await res.json();
+      designs = (data.designs || []).filter(d => d.Status !== "Inactive").map(normalizeDesignRow);
+      categories = (data.categories || []).map(c => ({key:c["Category Name"], icon:c["Icon (Emoji)"], desc:c.Description}));
+      facilities = (data.facilities || []).map(f => ({icon:f["Icon (Emoji)"], name:f["Facility Name"], desc:f.Description}));
+      pricing = (data.pricing || []).map(p => ({
+        name:p["Package Name"], note:p["Price Note"] || ("From ₹"+p.Price),
+        features:(p["Features (pipe separated)"]||"").split("|").map(s=>s.trim()).filter(Boolean),
+        featured:String(p.Featured).toLowerCase()==="yes",
+      }));
+      CONFIG.businessName = data.businessName || CONFIG.businessName;
+      CONFIG.startingFee = data.startingFee || CONFIG.startingFee;
+      CONFIG.referralReward = data.referralReward || CONFIG.referralReward;
+      CONFIG.paymentGateway = data.paymentGateway || CONFIG.paymentGateway;
+      renderAll();
+      checkPaymentReturn();
+      return;
+    } catch (err) {
+      console.warn("Could not reach Apps Script backend, falling back to sample data.", err);
+    }
+  }
+  designs = SAMPLE_DESIGNS.filter(d => d.status !== "Inactive");
+  categories = SAMPLE_CATEGORIES;
+  facilities = SAMPLE_FACILITIES;
+  pricing = SAMPLE_PRICING;
+  renderAll();
+  checkPaymentReturn();
+}
+
+/* Sheet rows use capitalized headers (e.g. "Design Name"); sample data uses
+   lowerCamelCase. This normalizes a live Sheet row to the same shape. */
+function normalizeDesignRow(d){
+  if (d.name) return d; // already normalized (sample data)
+  return {
+    id:d.ID, name:d["Design Name"], category:d.Category, description:d.Description,
+    image:d["Preview Image URL"], demoUrl:d["Demo URL"], status:d.Status,
+  };
+}
+
+function renderAll(){
+  document.title = document.title.replace("GopalSites", CONFIG.businessName);
+  document.querySelectorAll(".logo").forEach(el => {
+    el.innerHTML = `<span class="logo-mark"></span>${CONFIG.businessName}`;
+  });
+  document.getElementById("startingFeeAmountLabel").textContent = "₹" + CONFIG.startingFee;
+  document.getElementById("startingFeeAmountLabel2").textContent = "₹" + CONFIG.startingFee;
+  document.getElementById("referralRewardLabel").textContent = "₹" + CONFIG.referralReward;
+  document.getElementById("referralRewardLabel2").textContent = "₹" + CONFIG.referralReward;
+  renderCategories();
+  renderChips();
+  renderGallery();
+  renderCategorySelect();
+  renderFacilities();
+  renderPricing();
+}
+
+/* ===================== categories ===================== */
+function renderCategories(){
+  const grid = document.getElementById("catGrid");
+  grid.innerHTML = categories.map(cat => {
+    const count = designs.filter(d => d.category === cat.key).length;
+    return `<div class="glass cat-card" onclick="filterByCategory('${cat.key}')">
+      <span class="cat-icon">${cat.icon}</span>
+      <h4>${cat.key}</h4>
+      <p>${cat.desc}</p>
+      <span class="cat-count">${count} design${count===1?"":"s"} available</span>
+    </div>`;
+  }).join("");
+}
+
+/* ===================== facilities (trust section) ===================== */
+function renderFacilities(){
+  const grid = document.getElementById("trustGrid");
+  grid.innerHTML = facilities.map(f => `
+    <div class="glass trust-item"><span class="ti-mark">${f.icon}</span><div><h4>${f.name}</h4><p>${f.desc}</p></div></div>
+  `).join("");
+}
+
+/* ===================== pricing ===================== */
+function renderPricing(){
+  const grid = document.getElementById("priceGrid");
+  grid.innerHTML = pricing.map(p => `
+    <div class="glass price-card ${p.featured?"featured":""}">
+      <span class="price-tag">${p.name}</span>
+      <h3>${p.featured ? "For growing businesses" : "Package details"}</h3>
+      <span class="price-note">${p.note}</span>
+      <ul class="price-feats">${p.features.map(f=>`<li>${f}</li>`).join("")}</ul>
+      <a href="#enquiry" class="btn ${p.featured?"btn-primary":"btn-ghost"} btn-small">Get a custom quote</a>
+    </div>
+  `).join("");
+}
+
+function filterByCategory(cat){
+  activeFilter = cat;
+  document.getElementById("gallery").scrollIntoView({behavior:"smooth"});
+  renderChips();
+  renderGallery();
+}
+
+/* ===================== filter chips ===================== */
+function renderChips(){
+  const cats = ["All", ...Array.from(new Set(designs.map(d => d.category)))];
+  const row = document.getElementById("chipRow");
+  row.innerHTML = cats.map(c =>
+    `<div class="chip ${c===activeFilter?"active":""}" onclick="setFilter('${c}')">${c}</div>`
+  ).join("");
+}
+function setFilter(cat){
+  activeFilter = cat;
+  renderChips();
+  renderGallery();
+}
+document.getElementById("searchInput").addEventListener("input", (e) => {
+  searchTerm = e.target.value.toLowerCase();
+  renderGallery();
+});
+
+/* ===================== gallery ===================== */
+function renderGallery(){
+  const grid = document.getElementById("galleryGrid");
+  let list = designs;
+  if (activeFilter !== "All") list = list.filter(d => d.category === activeFilter);
+  if (searchTerm) list = list.filter(d =>
+    d.name.toLowerCase().includes(searchTerm) || d.category.toLowerCase().includes(searchTerm)
+  );
+  if (list.length === 0){
+    grid.innerHTML = `<p style="color:var(--ink-faint); grid-column:1/-1;">No designs match that search yet — try a different category.</p>`;
+    return;
+  }
+  grid.innerHTML = list.map(d => `
+    <div class="glass design-card">
+      <div class="design-thumb">
+        <img src="${d.image}" alt="${d.name}">
+        <span class="design-cat-tag">${d.category}</span>
+      </div>
+      <div class="design-body">
+        <h4>${d.name}</h4>
+        <p>${d.description}</p>
+        <div class="design-actions">
+          <button class="btn btn-ghost btn-small" onclick="openPreview('${d.id}')">Preview</button>
+          <button class="btn btn-primary btn-small" onclick="chooseDesign('${d.id}')">Choose this design</button>
+        </div>
+      </div>
+    </div>
+  `).join("");
+}
+
+/* ===================== preview modal ===================== */
+let modalDesignId = null;
+function openPreview(id){
+  const d = designs.find(x => x.id === id);
+  if (!d) return;
+  modalDesignId = id;
+  document.getElementById("modalImg").src = d.image;
+  document.getElementById("modalImg").alt = d.name;
+  document.getElementById("modalCat").textContent = d.category;
+  document.getElementById("modalName").textContent = d.name;
+  document.getElementById("modalDesc").textContent = d.description;
+  document.getElementById("modalDemoLink").href = d.demoUrl || "#";
+  document.getElementById("modalOverlay").classList.add("open");
+}
+function closeModal(){
+  document.getElementById("modalOverlay").classList.remove("open");
+}
+document.getElementById("modalOverlay").addEventListener("click", (e) => {
+  if (e.target.id === "modalOverlay") closeModal();
+});
+function chooseFromModal(){
+  if (modalDesignId) chooseDesign(modalDesignId);
+  closeModal();
+}
+
+/* ===================== choose design -> form ===================== */
+function chooseDesign(id){
+  const d = designs.find(x => x.id === id);
+  if (!d) return;
+  selectedDesign = d;
+  document.getElementById("sdName").textContent = `${d.name} (#${d.id})`;
+  document.getElementById("sdCat").textContent = d.category;
+  const box = document.getElementById("selectedDesignBox");
+  if (!box.querySelector("img")){
+    const img = document.createElement("img");
+    img.src = d.image;
+    box.insertBefore(img, box.firstChild);
+  } else {
+    box.querySelector("img").src = d.image;
+  }
+  document.getElementById("enquiry").scrollIntoView({behavior:"smooth"});
+}
+
+/* ===================== category select in form ===================== */
+function renderCategorySelect(){
+  const sel = document.getElementById("categorySelect");
+  sel.innerHTML = `<option value="">Select your business type</option>` +
+    categories.map(c => `<option value="${c.key}">${c.key}</option>`).join("") +
+    `<option value="Other">Other</option>`;
+}
+
+/* ===================== toggle pills ===================== */
+document.querySelectorAll('[data-toggle="hasWebsite"] .toggle-pill').forEach(p => {
+  p.addEventListener("click", () => {
+    p.parentElement.querySelectorAll(".toggle-pill").forEach(x => x.classList.remove("active"));
+    p.classList.add("active");
+  });
+});
+document.querySelectorAll('#featureToggles .toggle-pill').forEach(p => {
+  p.addEventListener("click", () => p.classList.toggle("active"));
+});
+
+/* ===================== multi-step form ===================== */
+function renderProgress(){
+  const row = document.getElementById("progressRow");
+  row.innerHTML = "";
+  for (let i=1;i<=TOTAL_STEPS;i++){
+    const seg = document.createElement("div");
+    seg.className = "progress-seg" + (i<=currentStep ? " done":"");
+    row.appendChild(seg);
+  }
+  document.getElementById("stepLabel").textContent = `Step ${currentStep} of ${TOTAL_STEPS} — ${stepLabels[currentStep-1]}`;
+}
+function showStep(n){
+  document.querySelectorAll(".step").forEach(s => s.classList.toggle("active", Number(s.dataset.step)===n));
+  document.getElementById("prevBtn").style.visibility = n===1 ? "hidden":"visible";
+  document.getElementById("nextBtn").textContent = n===TOTAL_STEPS ? "Request my website" : "Continue";
+  renderProgress();
+}
+function validateStep(n){
+  const stepEl = document.querySelector(`.step[data-step="${n}"]`);
+  const required = stepEl.querySelectorAll("[required]");
+  for (const field of required){
+    if (!field.value.trim()){
+      field.focus();
+      return false;
+    }
+  }
+  return true;
+}
+function changeStep(dir){
+  if (dir>0){
+    if (!validateStep(currentStep)) return;
+    if (currentStep === TOTAL_STEPS){ submitEnquiry(); return; }
+    currentStep++;
+  } else {
+    currentStep = Math.max(1, currentStep-1);
+  }
+  showStep(currentStep);
+}
+
+/* ===================== submit ===================== */
+async function submitEnquiry(){
+  const form = document.getElementById("enquiryForm");
+  const formData = new FormData(form);
+  const payload = Object.fromEntries(formData.entries());
+  payload.hasWebsite = document.querySelector('[data-toggle="hasWebsite"] .toggle-pill.active')?.dataset.value || "No";
+  payload.features = Array.from(document.querySelectorAll('#featureToggles .toggle-pill.active')).map(p => p.dataset.value).join(", ");
+  payload.selectedDesign = selectedDesign ? selectedDesign.name : "Not selected";
+  payload.selectedDesignId = selectedDesign ? selectedDesign.id : "";
+  payload.date = new Date().toISOString();
+
+  const nextBtn = document.getElementById("nextBtn");
+  nextBtn.disabled = true;
+  nextBtn.textContent = "Sending...";
+
+  let leadId = "demo-" + Date.now();
+  try {
+    if (CONFIG.APPS_SCRIPT_URL){
+      const res = await fetch(CONFIG.APPS_SCRIPT_URL, {
+        method: "POST",
+        headers: {"Content-Type":"text/plain"}, // avoids CORS preflight on Apps Script
+        body: JSON.stringify({action:"submitLead", lead: payload}),
+      });
+      const data = await res.json();
+      leadId = data.leadId || leadId;
+    } else {
+      console.log("Demo mode — lead payload (connect CONFIG.APPS_SCRIPT_URL to send for real):", payload);
+      await new Promise(r => setTimeout(r, 500));
+    }
+
+    lastLeadPayload = { leadId, name: payload.name, email: payload.email, phone: payload.phone };
+    const note = selectedDesign ? ` and that you'd like the "${selectedDesign.name}" design` : "";
+    document.getElementById("paymentDesignNote").textContent = note;
+
+    document.getElementById("formStepsUI").style.display = "none";
+    document.getElementById("paymentStartBox").style.display = "block";
+  } catch (err){
+    console.error(err);
+    alert("Something went wrong sending your enquiry. Please try again or reach us on WhatsApp.");
+    nextBtn.disabled = false;
+    nextBtn.textContent = "Request my website";
+  }
+}
+
+/* ===================== referrals ===================== */
+async function submitReferral(){
+  const referrerName = document.getElementById("refName").value.trim();
+  const referrerPhone = document.getElementById("refPhone").value.trim();
+  const referrerEmail = document.getElementById("refEmail").value.trim();
+  const businessName = document.getElementById("refBusinessName").value.trim();
+  const contactPerson = document.getElementById("refContactPerson").value.trim();
+  const contactPhone = document.getElementById("refContactPhone").value.trim();
+  const statusMsg = document.getElementById("referStatusMsg");
+
+  if (!referrerName || !referrerPhone || !businessName){
+    statusMsg.textContent = "Please fill in your name, phone, and the business you're referring.";
+    return;
+  }
+
+  const btn = document.getElementById("referBtn");
+  btn.disabled = true; btn.textContent = "Submitting...";
+
+  const referral = { referrerName, referrerPhone, referrerEmail, businessName, contactPerson, contactPhone };
+
+  try {
+    if (CONFIG.APPS_SCRIPT_URL){
+      await fetch(CONFIG.APPS_SCRIPT_URL, {
+        method: "POST",
+        headers: {"Content-Type":"text/plain"},
+        body: JSON.stringify({ action:"submitReferral", referral }),
+      });
+    } else {
+      console.log("Demo mode — referral payload:", referral);
+      await new Promise(r => setTimeout(r, 500));
+    }
+    statusMsg.textContent = `Thanks! We've got it — you'll receive ₹${CONFIG.referralReward} once their project goes ahead.`;
+    document.querySelectorAll("#refer input").forEach(i => i.value = "");
+  } catch (err){
+    console.error(err);
+    statusMsg.textContent = "Something went wrong — please try again or message us on WhatsApp.";
+  }
+  btn.disabled = false; btn.textContent = "Submit referral";
+}
+
+/* ===================== payments ===================== */
+async function createAndRedirect(amount, type, extra){
+  if (!CONFIG.APPS_SCRIPT_URL){
+    alert(`Demo mode: connect CONFIG.APPS_SCRIPT_URL and your ${CONFIG.paymentGateway} keys in the Settings sheet to take real payments. In live mode this button would open a ₹${amount} ${CONFIG.paymentGateway} checkout page.`);
+    return null;
+  }
+  const res = await fetch(CONFIG.APPS_SCRIPT_URL, {
+    method: "POST",
+    headers: {"Content-Type":"text/plain"},
+    body: JSON.stringify({ action:"createPayment", amount, type, ...extra }),
+  });
+  const data = await res.json();
+  if (data.success && data.checkoutUrl){
+    window.location.href = data.checkoutUrl;
+  } else {
+    alert("Could not start payment: " + (data.error || "unknown error"));
+  }
+  return data;
+}
+
+async function startProjectPayment(){
+  const btn = document.getElementById("startPaymentBtn");
+  btn.disabled = true; btn.textContent = "Opening secure payment...";
+  const result = await createAndRedirect(CONFIG.startingFee, "Starting Fee", lastLeadPayload || {});
+  if (!result){ // demo mode — simulate the happy path
+    document.getElementById("paymentStartBox").style.display = "none";
+    document.getElementById("successTitle").textContent = "Payment received";
+    document.getElementById("successMsg").textContent = "Thanks — your project has officially started. We'll reach out within 24 hours to begin work.";
+    document.getElementById("successBox").style.display = "block";
+  } else {
+    btn.disabled = false; btn.textContent = `Pay ₹${CONFIG.startingFee} & start my project`;
+  }
+}
+
+async function startCustomPayment(){
+  const name = document.getElementById("payName").value.trim();
+  const email = document.getElementById("payEmail").value.trim();
+  const phone = document.getElementById("payPhone").value.trim();
+  const amount = Number(document.getElementById("payAmount").value);
+  const statusMsg = document.getElementById("payStatusMsg");
+  if (!amount || amount <= 0){ statusMsg.textContent = "Enter a valid amount first."; return; }
+
+  const btn = document.getElementById("payNowBtn");
+  btn.disabled = true; btn.textContent = "Opening secure payment...";
+  const result = await createAndRedirect(amount, "Custom Amount", { name, email, phone });
+  btn.disabled = false; btn.textContent = "Pay now";
+  if (!result) statusMsg.textContent = "Demo mode — no live payment was created.";
+}
+
+/* Runs on load: if the gateway just redirected back here after checkout,
+   verify the payment status and show the result. */
+async function checkPaymentReturn(){
+  const params = new URLSearchParams(window.location.search);
+  const paymentId = params.get("payment_id");
+  const gateway = params.get("gateway");
+  if (!paymentId || !gateway || !CONFIG.APPS_SCRIPT_URL) return;
+
+  const banner = document.getElementById("paymentReturnBanner");
+  banner.style.display = "block";
+  banner.innerHTML = "Checking your payment status...";
+  banner.scrollIntoView({behavior:"smooth"});
+
+  try {
+    const res = await fetch(`${CONFIG.APPS_SCRIPT_URL}?action=verifyPayment&payment_id=${paymentId}&gateway=${gateway}`);
+    const data = await res.json();
+    if (data.status === "Paid"){
+      banner.innerHTML = "<strong>Payment received.</strong> Thank you — we'll be in touch shortly.";
+    } else {
+      banner.innerHTML = `Payment status: <strong>${data.status}</strong>. If you completed the payment, this may take a minute to update — refresh to check again.`;
+    }
+  } catch (err){
+    banner.innerHTML = "We couldn't confirm your payment status automatically — if you completed payment, we'll still receive it and follow up.";
+  }
+}
+
+/* ===================== mobile nav ===================== */
+function toggleMenu(){
+  const links = document.getElementById("navLinks");
+  const btn = document.getElementById("menuToggle");
+  const isOpen = links.classList.toggle("open");
+  btn.classList.toggle("open", isOpen);
+  btn.setAttribute("aria-expanded", String(isOpen));
+}
+document.querySelectorAll("#navLinks a").forEach(a => {
+  a.addEventListener("click", () => {
+    document.getElementById("navLinks").classList.remove("open");
+    document.getElementById("menuToggle").classList.remove("open");
+    document.getElementById("menuToggle").setAttribute("aria-expanded", "false");
+  });
+});
+
+/* ===================== init ===================== */
+showStep(1);
+loadDesigns();
+</script>
+</body>
+</html>

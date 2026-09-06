@@ -1,0 +1,7 @@
+Category Name,Icon (Emoji),Description,Status,Sort Order
+Restaurant,🍽️,"Menus, reservations, location",Active,1
+Cafe,☕,"Menus and a warm first impression",Active,2
+Salon,💇,"Services, gallery, booking",Active,3
+Doctor,🩺,"Appointments, services, trust",Active,4
+Lawyer,⚖️,"Practice areas and consultations",Active,5
+Real Estate,🏠,"Listings, search, enquiries",Active,6
