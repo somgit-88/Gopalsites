@@ -447,12 +447,7 @@
                 </select>
               </div>
               <div class="field"><label>Features you need</label>
-                <div class="toggle-row" id="featureToggles">
-                  <div class="toggle-pill" data-value="E-commerce">E-commerce</div>
-                  <div class="toggle-pill" data-value="Online booking">Online booking</div>
-                  <div class="toggle-pill" data-value="WhatsApp integration">WhatsApp integration</div>
-                  <div class="toggle-pill" data-value="Payment gateway">Payment gateway</div>
-                </div>
+                <div class="toggle-row" id="featureToggles"></div>
               </div>
             </div>
             <div class="step" data-step="4">
@@ -682,6 +677,11 @@ const SAMPLE_FACILITIES = [
   {icon:"◐", name:"Support after launch", desc:"We stay reachable after your site goes live, for fixes, edits and questions."},
 ];
 
+/* Fallback list for the "Features you need" toggles in the enquiry form —
+   used until CONFIG.APPS_SCRIPT_URL is connected to the "Website Features"
+   tab. Add or remove a row there to add/remove an option, no code needed. */
+const SAMPLE_WEBSITE_FEATURES = ["E-commerce", "Online booking", "WhatsApp integration", "Payment gateway"];
+
 /* Fallback pricing — used until CONFIG.APPS_SCRIPT_URL is connected to the
    "Pricing" tab. Change rates and features there without touching code. */
 const SAMPLE_PRICING = [
@@ -714,6 +714,7 @@ const SAMPLE_DESIGNS = [
 let designs = [];
 let categories = [];
 let facilities = [];
+let websiteFeatures = [];
 let pricing = [];
 let activeFilter = "All";
 let searchTerm = "";
@@ -732,6 +733,7 @@ async function loadDesigns(){
       designs = (data.designs || []).filter(d => d.Status !== "Inactive").map(normalizeDesignRow);
       categories = (data.categories || []).map(c => ({key:c["Category Name"], icon:c["Icon (Emoji)"], desc:c.Description}));
       facilities = (data.facilities || []).map(f => ({icon:f["Icon (Emoji)"], name:f["Facility Name"], desc:f.Description}));
+      websiteFeatures = (data.websiteFeatures || []).map(f => f["Feature Name"]);
       pricing = (data.pricing || []).map(p => ({
         name:p["Package Name"], currency:(p.Currency || "INR").toUpperCase(),
         note:p["Price Note"] || (((p.Currency||"INR").toUpperCase()==="USD"?"From $":"From ₹")+p.Price),
@@ -754,6 +756,7 @@ async function loadDesigns(){
   designs = SAMPLE_DESIGNS.filter(d => d.status !== "Inactive");
   categories = SAMPLE_CATEGORIES;
   facilities = SAMPLE_FACILITIES;
+  websiteFeatures = SAMPLE_WEBSITE_FEATURES;
   pricing = SAMPLE_PRICING;
   renderAll();
   checkPaymentReturn();
@@ -783,6 +786,7 @@ function renderAll(){
   renderGallery();
   renderCategorySelect();
   renderFacilities();
+  renderFeatureToggles();
   renderPricing();
 }
 
@@ -939,15 +943,21 @@ function renderCategorySelect(){
     `<option value="Other">Other</option>`;
 }
 
+/* ===================== website features (dynamic) ===================== */
+function renderFeatureToggles(){
+  const row = document.getElementById("featureToggles");
+  row.innerHTML = websiteFeatures.map(f => `<div class="toggle-pill" data-value="${f}">${f}</div>`).join("");
+  row.querySelectorAll(".toggle-pill").forEach(p => {
+    p.addEventListener("click", () => p.classList.toggle("active"));
+  });
+}
+
 /* ===================== toggle pills ===================== */
 document.querySelectorAll('[data-toggle="hasWebsite"] .toggle-pill').forEach(p => {
   p.addEventListener("click", () => {
     p.parentElement.querySelectorAll(".toggle-pill").forEach(x => x.classList.remove("active"));
     p.classList.add("active");
   });
-});
-document.querySelectorAll('#featureToggles .toggle-pill').forEach(p => {
-  p.addEventListener("click", () => p.classList.toggle("active"));
 });
 document.querySelectorAll('[data-toggle="region"] .toggle-pill').forEach(p => {
   p.addEventListener("click", () => {
