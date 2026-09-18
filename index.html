@@ -291,6 +291,29 @@
 
   footer{ padding-bottom:calc(40px + env(safe-area-inset-bottom)); }
   body{ overflow-x:hidden; }
+
+  /* floating instant-chat button */
+  .whatsapp-fab{
+    position:fixed; z-index:150;
+    bottom:calc(20px + env(safe-area-inset-bottom));
+    right:calc(20px + env(safe-area-inset-right));
+    width:56px; height:56px; border-radius:50%;
+    background:linear-gradient(135deg, #34c976, #21a05a);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 10px 28px -6px rgba(33,160,90,0.6), 0 0 0 1px rgba(255,255,255,0.15) inset;
+    text-decoration:none; transition:transform .3s var(--ease);
+  }
+  .whatsapp-fab:hover{ transform:translateY(-3px) scale(1.05); }
+  .whatsapp-fab-ring{
+    position:absolute; inset:0; border-radius:50%;
+    border:2px solid rgba(52,201,118,0.6);
+    animation:fabPulse 2.4s ease-out infinite;
+  }
+  @keyframes fabPulse{
+    0%{ transform:scale(1); opacity:0.8; }
+    100%{ transform:scale(1.6); opacity:0; }
+  }
+  @media (prefers-reduced-motion: reduce){ .whatsapp-fab-ring{ animation:none; } }
 </style>
 </head>
 <body>
@@ -595,7 +618,7 @@
           <h5>Get in touch</h5>
           <a href="#enquiry">Start a project</a>
           <a href="mailto:hello@example.com">hello@example.com</a>
-          <a href="https://wa.me/910000000000">WhatsApp us</a>
+          <a href="https://wa.me/910000000000" id="footerWhatsappLink">WhatsApp us</a>
         </div>
       </div>
     </div>
@@ -605,6 +628,13 @@
     </div>
   </div>
 </footer>
+
+<a href="#" id="whatsappFab" class="whatsapp-fab" target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp">
+  <span class="whatsapp-fab-ring"></span>
+  <svg viewBox="0 0 24 24" width="26" height="26" fill="white">
+    <path d="M12 3C7.03 3 3 7.03 3 12c0 1.77.5 3.42 1.38 4.83L3.4 21l4.32-1.35A8.96 8.96 0 0 0 12 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm4.7 12.6c-.2.55-1.15 1.05-1.6 1.1-.4.05-.9.08-1.45-.1-.35-.1-.8-.25-1.35-.5-2.4-1.05-3.95-3.45-4.07-3.6-.12-.15-.95-1.25-.95-2.4 0-1.1.6-1.65.8-1.9.2-.2.45-.25.6-.25h.45c.15 0 .35-.05.5.4.2.5.65 1.65.7 1.75.05.1.1.25 0 .4-.35.65-.75.9-1.05 1.2-.1.1-.2.25-.05.5.4.8 1.1 1.6 1.85 2.2.9.7 1.5.95 1.75 1.05.2.1.35.1.5-.05.2-.25.7-.8.9-1.1.2-.25.4-.2.65-.1.25.1 1.55.75 1.8.9.25.15.4.2.45.3.05.15.05.7-.15 1.2z"/>
+  </svg>
+</a>
 
 <div class="modal-overlay" id="modalOverlay">
   <div class="glass modal-box" style="position:relative;">
@@ -636,6 +666,8 @@ const CONFIG = {
   referralReward: 500,
   paymentGateway: "Razorpay",
   internationalGateway: "Wise",
+  whatsappNumber: "910000000000",
+  contactEmail: "hello@example.com",
 };
 
 /* Fallback categories — used only until CONFIG.APPS_SCRIPT_URL is connected
@@ -746,6 +778,8 @@ async function loadDesigns(){
       CONFIG.referralReward = data.referralReward || CONFIG.referralReward;
       CONFIG.paymentGateway = data.paymentGateway || CONFIG.paymentGateway;
       CONFIG.internationalGateway = data.internationalGateway || CONFIG.internationalGateway;
+      CONFIG.whatsappNumber = data.whatsappNumber || CONFIG.whatsappNumber;
+      CONFIG.contactEmail = data.contactEmail || CONFIG.contactEmail;
       renderAll();
       checkPaymentReturn();
       return;
@@ -781,6 +815,7 @@ function renderAll(){
   document.getElementById("startingFeeAmountLabel2").textContent = "₹" + CONFIG.startingFee;
   document.getElementById("referralRewardLabel").textContent = "₹" + CONFIG.referralReward;
   document.getElementById("referralRewardLabel2").textContent = "₹" + CONFIG.referralReward;
+  updateWhatsappLinks();
   renderCategories();
   renderChips();
   renderGallery();
@@ -788,6 +823,23 @@ function renderAll(){
   renderFacilities();
   renderFeatureToggles();
   renderPricing();
+}
+
+/* Points the floating chat button and the footer link at the real
+   WhatsApp number from Settings, with a friendly pre-filled opener so
+   the customer doesn't have to type the first message themselves.
+   WhatsApp queues messages on its own — if you're offline when it
+   arrives, it's just waiting for you next time you open the app,
+   nothing extra needed for that. */
+function updateWhatsappLinks(){
+  const digits = (CONFIG.whatsappNumber || "").replace(/[^0-9]/g, "");
+  if (!digits) return;
+  const text = encodeURIComponent(`Hi ${CONFIG.businessName}, I'd like to talk about getting a website.`);
+  const url = `https://wa.me/${digits}?text=${text}`;
+  const fab = document.getElementById("whatsappFab");
+  const footerLink = document.getElementById("footerWhatsappLink");
+  if (fab) fab.href = url;
+  if (footerLink) footerLink.href = url;
 }
 
 /* ===================== categories ===================== */
