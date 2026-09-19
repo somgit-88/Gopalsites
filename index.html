@@ -617,7 +617,7 @@
         <div class="footer-col">
           <h5>Get in touch</h5>
           <a href="#enquiry">Start a project</a>
-          <a href="mailto:hello@example.com">hello@example.com</a>
+          <a href="mailto:hello@example.com" id="footerEmailLink">hello@example.com</a>
           <a href="https://wa.me/910000000000" id="footerWhatsappLink">WhatsApp us</a>
         </div>
       </div>
@@ -825,21 +825,32 @@ function renderAll(){
   renderPricing();
 }
 
-/* Points the floating chat button and the footer link at the real
-   WhatsApp number from Settings, with a friendly pre-filled opener so
-   the customer doesn't have to type the first message themselves.
-   WhatsApp queues messages on its own — if you're offline when it
-   arrives, it's just waiting for you next time you open the app,
-   nothing extra needed for that. */
+/* Points the floating chat button, the footer WhatsApp link, and the
+   footer email link at the real values from Settings, with a friendly
+   pre-filled WhatsApp opener so the customer doesn't have to type the
+   first message themselves. WhatsApp queues messages on its own — if
+   you're offline when it arrives, it's just waiting for you next time
+   you open the app, nothing extra needed for that. */
 function updateWhatsappLinks(){
-  const digits = (CONFIG.whatsappNumber || "").replace(/[^0-9]/g, "");
-  if (!digits) return;
-  const text = encodeURIComponent(`Hi ${CONFIG.businessName}, I'd like to talk about getting a website.`);
-  const url = `https://wa.me/${digits}?text=${text}`;
+  // Google Sheets sometimes stores a number-looking cell as an actual
+  // number, not text — String(...) guards against that so .replace()
+  // below never crashes on a number.
+  const digits = String(CONFIG.whatsappNumber || "").replace(/[^0-9]/g, "");
   const fab = document.getElementById("whatsappFab");
   const footerLink = document.getElementById("footerWhatsappLink");
-  if (fab) fab.href = url;
-  if (footerLink) footerLink.href = url;
+  if (digits){
+    const text = encodeURIComponent(`Hi ${CONFIG.businessName}, I'd like to talk about getting a website.`);
+    const url = `https://wa.me/${digits}?text=${text}`;
+    if (fab) fab.href = url;
+    if (footerLink) footerLink.href = url;
+  }
+
+  const email = String(CONFIG.contactEmail || "").trim();
+  const emailLink = document.getElementById("footerEmailLink");
+  if (email && emailLink){
+    emailLink.href = "mailto:" + email;
+    emailLink.textContent = email;
+  }
 }
 
 /* ===================== categories ===================== */
