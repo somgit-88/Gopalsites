@@ -758,6 +758,17 @@ const stepLabels = ["Your details","Your business","Your website","Budget & requ
 
 /* ===================== data loading ===================== */
 async function loadDesigns(){
+  // Show sample content immediately so the page never looks empty or
+  // slow, and so buttons like WhatsApp have a working link from the
+  // very first frame — then quietly swap in real Sheet data once it
+  // arrives, re-rendering in place.
+  designs = SAMPLE_DESIGNS.filter(d => d.status !== "Inactive");
+  categories = SAMPLE_CATEGORIES;
+  facilities = SAMPLE_FACILITIES;
+  websiteFeatures = SAMPLE_WEBSITE_FEATURES;
+  pricing = SAMPLE_PRICING;
+  renderAll();
+
   if (CONFIG.APPS_SCRIPT_URL) {
     try {
       const res = await fetch(CONFIG.APPS_SCRIPT_URL + "?action=config");
@@ -781,18 +792,10 @@ async function loadDesigns(){
       CONFIG.whatsappNumber = data.whatsappNumber || CONFIG.whatsappNumber;
       CONFIG.contactEmail = data.contactEmail || CONFIG.contactEmail;
       renderAll();
-      checkPaymentReturn();
-      return;
     } catch (err) {
-      console.warn("Could not reach Apps Script backend, falling back to sample data.", err);
+      console.warn("Could not reach Apps Script backend, staying on sample data.", err);
     }
   }
-  designs = SAMPLE_DESIGNS.filter(d => d.status !== "Inactive");
-  categories = SAMPLE_CATEGORIES;
-  facilities = SAMPLE_FACILITIES;
-  websiteFeatures = SAMPLE_WEBSITE_FEATURES;
-  pricing = SAMPLE_PRICING;
-  renderAll();
   checkPaymentReturn();
 }
 
