@@ -194,7 +194,7 @@
   .design-body{ padding:20px 22px 22px; display:flex; flex-direction:column; gap:10px; flex:1;}
   .design-body h4{ font-size:18px; font-family:'Manrope'; font-weight:800;}
   .design-body p{ font-size:13.5px; color:var(--ink-faint); line-height:1.5; flex:1;}
-  .design-actions{ display:flex; gap:10px; margin-top:6px;}
+  .design-actions{ display:flex; gap:10px; margin-top:6px; flex-wrap:wrap;}
 
   /* modal */
   .modal-overlay{ position:fixed; inset:0; background:rgba(10,9,22,0.72); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); z-index:200; display:none; align-items:center; justify-content:center; padding:24px; padding-top:calc(24px + env(safe-area-inset-top)); padding-bottom:calc(24px + env(safe-area-inset-bottom));}
@@ -206,7 +206,7 @@
   .modal-cat{ color:var(--amber-soft); font-size:13px; font-weight:700; margin-bottom:16px; display:block;}
   .modal-content p{ color:var(--ink-dim); font-size:15px; line-height:1.6; margin-bottom:22px;}
   .modal-close{ position:absolute; top:16px; right:16px; width:44px; height:44px; border-radius:50%; background:rgba(16,14,36,0.7); border:1px solid var(--glass-border); color:var(--ink); font-size:16px; cursor:pointer; display:flex; align-items:center; justify-content:center;}
-  .modal-actions{ display:flex; gap:12px;}
+  .modal-actions{ display:flex; gap:12px; flex-wrap:wrap;}
 
   /* pricing */
   .price-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:22px;}
@@ -624,7 +624,6 @@
     </div>
     <div class="footer-bottom">
       <span>© 2026 GopalSites. All rights reserved.</span>
-      <span>Built and hosted on Cloudflare Pages</span>
     </div>
   </div>
 </footer>
@@ -647,6 +646,7 @@
       <div class="modal-actions">
         <button class="btn btn-primary" onclick="chooseFromModal()">I want this design</button>
         <a class="btn btn-ghost" id="modalDemoLink" href="#" target="_blank" rel="noopener">View live demo</a>
+        <a class="btn btn-ghost" id="modalWhatsappLink" href="#" target="_blank" rel="noopener">Chat on WhatsApp</a>
       </div>
     </div>
   </div>
@@ -717,9 +717,11 @@ const SAMPLE_WEBSITE_FEATURES = ["E-commerce", "Online booking", "WhatsApp integ
 /* Fallback pricing — used until CONFIG.APPS_SCRIPT_URL is connected to the
    "Pricing" tab. Change rates and features there without touching code. */
 const SAMPLE_PRICING = [
+  {name:"Website on Rent", currency:"INR", note:"₹999/month", features:["No big upfront cost","Includes hosting & domain","Free edits every month","Cancel anytime"], featured:false},
   {name:"Starter", currency:"INR", note:"From ₹10,000", features:["Up to 5 pages","Mobile responsive design","WhatsApp contact button","Basic SEO setup"], featured:false},
   {name:"Professional", currency:"INR", note:"From ₹25,000", features:["Up to 12 pages","Online booking or enquiry forms","Custom design refinements","SEO for every page","3 months of support"], featured:true},
   {name:"E-commerce", currency:"INR", note:"From ₹50,000", features:["Full product catalogue","Payment gateway integration","Order and inventory basics","6 months of support"], featured:false},
+  {name:"Website on Rent", currency:"USD", note:"$25/month", features:["No big upfront cost","Includes hosting & domain","Free edits every month","Cancel anytime"], featured:false},
   {name:"Starter", currency:"USD", note:"From $1,200", features:["Up to 5 pages","Mobile responsive design","WhatsApp contact button","Basic SEO setup"], featured:false},
   {name:"Professional", currency:"USD", note:"From $2,000", features:["Up to 12 pages","Online booking or enquiry forms","Custom design refinements","SEO for every page","3 months of support"], featured:true},
   {name:"E-commerce", currency:"USD", note:"From $3,000", features:["Full product catalogue","Payment gateway integration","Order and inventory basics","6 months of support"], featured:false},
@@ -834,6 +836,15 @@ function renderAll(){
    first message themselves. WhatsApp queues messages on its own — if
    you're offline when it arrives, it's just waiting for you next time
    you open the app, nothing extra needed for that. */
+/* Builds a wa.me link with a pre-filled, context-specific message —
+   used by the pricing cards, design cards, and preview modal so
+   "Chat on WhatsApp" always opens with a relevant opener already typed. */
+function whatsappUrl(message){
+  const digits = String(CONFIG.whatsappNumber || "").replace(/[^0-9]/g, "");
+  if (!digits) return "#";
+  return `https://wa.me/${digits}?text=${encodeURIComponent(message)}`;
+}
+
 function updateWhatsappLinks(){
   // Google Sheets sometimes stores a number-looking cell as an actual
   // number, not text — String(...) guards against that so .replace()
@@ -898,7 +909,10 @@ function renderPricing(){
       <h3>${p.featured ? "For growing businesses" : "Package details"}</h3>
       <span class="price-note">${p.note}</span>
       <ul class="price-feats">${p.features.map(f=>`<li>${f}</li>`).join("")}</ul>
-      <a href="#enquiry" class="btn ${p.featured?"btn-primary":"btn-ghost"} btn-small">Get a custom quote</a>
+      <div class="design-actions">
+        <a href="#enquiry" class="btn ${p.featured?"btn-primary":"btn-ghost"} btn-small">Get a custom quote</a>
+        <a href="${whatsappUrl(`Hi, I'm interested in the ${p.name} package (${p.note}).`)}" target="_blank" rel="noopener" class="btn btn-ghost btn-small">Chat on WhatsApp</a>
+      </div>
     </div>
   `).join("");
 }
@@ -952,6 +966,7 @@ function renderGallery(){
         <div class="design-actions">
           <button class="btn btn-ghost btn-small" onclick="openPreview('${d.id}')">Preview</button>
           <button class="btn btn-primary btn-small" onclick="chooseDesign('${d.id}')">Choose this design</button>
+          <a href="${whatsappUrl(`Hi, I'd like to know more about the ${d.name} design.`)}" target="_blank" rel="noopener" class="btn btn-ghost btn-small">Chat</a>
         </div>
       </div>
     </div>
@@ -970,6 +985,7 @@ function openPreview(id){
   document.getElementById("modalName").textContent = d.name;
   document.getElementById("modalDesc").textContent = d.description;
   document.getElementById("modalDemoLink").href = d.demoUrl || "#";
+  document.getElementById("modalWhatsappLink").href = whatsappUrl(`Hi, I'd like to know more about the ${d.name} design.`);
   document.getElementById("modalOverlay").classList.add("open");
 }
 function closeModal(){
