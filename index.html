@@ -774,6 +774,20 @@ async function loadDesigns(){
     try {
       const res = await fetch(CONFIG.APPS_SCRIPT_URL + "?action=config");
       const data = await res.json();
+
+      // The backend now always returns JSON — even on failure — as
+      // { error: "..." }. Surface that immediately instead of silently
+      // falling back, so a broken Sheet/tab is obvious without opening
+      // devtools.
+      if (data.error) {
+        console.error("Apps Script returned an error:", data.error, data.hint || "");
+        document.getElementById("paymentReturnBanner").style.display = "block";
+        document.getElementById("paymentReturnBanner").innerHTML =
+          `<strong>Backend error:</strong> ${data.error}`;
+        checkPaymentReturn();
+        return;
+      }
+
       designs = (data.designs || []).filter(d => d.Status !== "Inactive").map(normalizeDesignRow);
       categories = (data.categories || []).map(c => ({key:c["Category Name"], icon:c["Icon (Emoji)"], desc:c.Description}));
       facilities = (data.facilities || []).map(f => ({icon:f["Icon (Emoji)"], name:f["Facility Name"], desc:f.Description}));
@@ -784,17 +798,30 @@ async function loadDesigns(){
         features:(p["Features (pipe separated)"]||"").split("|").map(s=>s.trim()).filter(Boolean),
         featured:String(p.Featured).toLowerCase()==="yes",
       }));
-      CONFIG.businessName = data.businessName || CONFIG.businessName;
-      CONFIG.startingFee = data.startingFee || CONFIG.startingFee;
-      CONFIG.startingFeeUSD = data.startingFeeUSD || CONFIG.startingFeeUSD;
-      CONFIG.referralReward = data.referralReward || CONFIG.referralReward;
-      CONFIG.paymentGateway = data.paymentGateway || CONFIG.paymentGateway;
-      CONFIG.internationalGateway = data.internationalGateway || CONFIG.internationalGateway;
-      CONFIG.whatsappNumber = data.whatsappNumber || CONFIG.whatsappNumber;
-      CONFIG.contactEmail = data.contactEmail || CONFIG.contactEmail;
+
+      // Only overwrite a default when the Sheet actually has a non-empty
+      // value for it — an intentionally blank cell shouldn't be masked
+      // by "||", but it also shouldn't silently keep last session's data.
+      if (data.businessName) CONFIG.businessName = data.businessName;
+      if (data.startingFee) CONFIG.startingFee = data.startingFee;
+      if (data.startingFeeUSD) CONFIG.startingFeeUSD = data.startingFeeUSD;
+      if (data.referralReward) CONFIG.referralReward = data.referralReward;
+      if (data.paymentGateway) CONFIG.paymentGateway = data.paymentGateway;
+      if (data.internationalGateway) CONFIG.internationalGateway = data.internationalGateway;
+      if (data.whatsappNumber) CONFIG.whatsappNumber = data.whatsappNumber;
+      if (data.contactEmail) CONFIG.contactEmail = data.contactEmail;
+
+      console.log("✓ Live config loaded:", {
+        whatsappNumber: CONFIG.whatsappNumber,
+        contactEmail: CONFIG.contactEmail,
+        businessName: CONFIG.businessName,
+      });
       renderAll();
     } catch (err) {
-      console.warn("Could not reach Apps Script backend, staying on sample data.", err);
+      console.error("Could not reach or parse the Apps Script backend — staying on sample data.", err);
+      document.getElementById("paymentReturnBanner").style.display = "block";
+      document.getElementById("paymentReturnBanner").innerHTML =
+        `<strong>Couldn't load live settings.</strong> The page is showing placeholder contact details. Open the Apps Script URL directly in a browser with <code>?action=config</code> appended to see the raw error.`;
     }
   }
   checkPaymentReturn();
@@ -832,12 +859,7 @@ function renderAll(){
 /* Points the floating chat button, the footer WhatsApp link, and the
    footer email link at the real values from Settings, with a friendly
    pre-filled WhatsApp opener so the customer doesn't have to type the
-   first message themselves. WhatsApp queues messages on its own — if
-   you're offline when it arrives, it's just waiting for you next time
-   you open the app, nothing extra needed for that. */
-/* Builds a wa.me link with a pre-filled, context-specific message —
-   used by the pricing cards, design cards, and preview modal so
-   "Chat on WhatsApp" always opens with a relevant opener already typed. */
+   first message themselves. */
 function whatsappUrl(message){
   const digits = String(CONFIG.whatsappNumber || "").replace(/[^0-9]/g, "");
   if (!digits) return "#";
